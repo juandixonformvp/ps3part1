@@ -107,7 +107,24 @@ public class XMLforMovies {
     public String actorsFor(String movieID) throws SQLException {
 
         // replace this return statement with your implementation of the method
-        return "";
+        String query = "SELECT P.name\n" +
+                "FROM Person P, Movie M, Actor A\n" +
+                "WHERE M.name = \"Black Panther\"\n" +
+                "AND A.movie_id = M.id\n" +
+                "AND P.id = A.actor_id\n" +
+                "ORDER BY P.name;";
+        Statement stmt = this.db.createStatement();
+        ResultSet results = stmt.executeQuery(query);
+
+        String userWords = "";
+
+        while (results.next()) {
+            userWords += simpleElem("actor", results.getString(1));
+        }
+
+        return userWords;
+
+
     }
 
     /*
@@ -188,7 +205,7 @@ public class XMLforMovies {
         // convert the entire database into an XML file.
         XMLforMovies xml = new XMLforMovies(dbFilename);
         xml.createFile("movies.xml");
-        System.out.print(xml.fieldsFor(xml.idFor("Black Panther")));
+        System.out.print(xml.actorsFor(xml.idFor("Black Panther")));
         xml.closeDB();
     }
 }
