@@ -54,7 +54,12 @@ public class XMLforMovies {
     public String simpleElem(String name, String value) {
 
         // replace this return statement with your implementation of the method
-        return "<" + name + ">" + value + "</" + name + ">";
+        if (value == null) {
+            return "";
+        }
+        else {
+            return "    <" + name + ">" + value + "</" + name + ">" + "\n";
+        }
     }
 
     /*
@@ -66,7 +71,30 @@ public class XMLforMovies {
     public String fieldsFor(String movieID) throws SQLException {
 
         // replace this return statement with your implementation of the method
-        return "";
+        String query = "SELECT * FROM Movie WHERE id = '" + movieID + "';";
+        Statement stmt = this.db.createStatement();
+        ResultSet results = stmt.executeQuery(query);
+
+        if (results.next()) {
+            String id = results.getString(1);
+            String name = results.getString(2);
+            String year = results.getString(3);
+            String rating = results.getString(4);
+            String runtime = results.getString(5);
+            String genre = results.getString(6);
+            String earnings_rank = results.getString(7);
+
+            return  simpleElem("name", name) +
+                    simpleElem("year", year) +
+                    simpleElem("rating", rating) +
+                    simpleElem("runtime", runtime) +
+                    simpleElem("genre", genre) +
+                    simpleElem("earnings_rank", earnings_rank)
+                    ;
+        } else {
+            return "";
+        }
+
     }
 
     /*
@@ -160,6 +188,7 @@ public class XMLforMovies {
         // convert the entire database into an XML file.
         XMLforMovies xml = new XMLforMovies(dbFilename);
         xml.createFile("movies.xml");
+        System.out.print(xml.fieldsFor(xml.idFor("Black Panther")));
         xml.closeDB();
     }
 }
