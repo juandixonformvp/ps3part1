@@ -54,7 +54,7 @@ public class XMLforMovies {
     public String simpleElem(String name, String value) {
 
         // replace this return statement with your implementation of the method
-        return "";
+        return "<" + name + ">" + value + "</" + name + ">";
     }
 
     /*
