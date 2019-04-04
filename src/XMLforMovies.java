@@ -171,8 +171,8 @@ public class XMLforMovies {
      * the specified id number, the method returns an empty string.
      */
     public String elementFor(String movieID) throws SQLException {
-        // replace this return statement with your implementation of the method
-        return "";
+
+        return "  <movie id=\"" + movieID + "\">\n" + fieldsFor(movieID) + actorsFor(movieID) + directorsFor(movieID) + "  </movie>\n";
     }
 
     /*
@@ -228,7 +228,7 @@ public class XMLforMovies {
         // convert the entire database into an XML file.
         XMLforMovies xml = new XMLforMovies(dbFilename);
         xml.createFile("movies.xml");
-        System.out.print(xml.directorsFor("1234567"));
+        System.out.print(xml.elementFor(xml.idFor("Black Panther")));
         xml.closeDB();
     }
 }
