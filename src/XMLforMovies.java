@@ -108,9 +108,8 @@ public class XMLforMovies {
 
         // replace this return statement with your implementation of the method
         String query = "SELECT P.name\n" +
-                "FROM Person P, Movie M, Actor A\n" +
-                "WHERE M.name = \"Black Panther\"\n" +
-                "AND A.movie_id = M.id\n" +
+                "FROM Person P, Actor A\n" +
+                "WHERE A.movie_id = '" + movieID + "'\n" +
                 "AND P.id = A.actor_id\n" +
                 "ORDER BY P.name;";
         Statement stmt = this.db.createStatement();
@@ -119,12 +118,11 @@ public class XMLforMovies {
         String userWords = "    <actors>" + "\n";
 
         if (results.next()) {
+            userWords += "  " + simpleElem("actor", results.getString(1));
             while (results.next()) {
                 userWords += "  " + simpleElem("actor", results.getString(1));
             }
-
             userWords += "    </actors>" + "\n";
-
             return userWords;
         }
         else {
