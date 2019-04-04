@@ -116,14 +116,20 @@ public class XMLforMovies {
         Statement stmt = this.db.createStatement();
         ResultSet results = stmt.executeQuery(query);
 
-        String userWords = "";
+        String userWords = "    <actors>" + "\n";
 
-        while (results.next()) {
-            userWords += simpleElem("actor", results.getString(1));
+        if (results.next()) {
+            while (results.next()) {
+                userWords += "  " + simpleElem("actor", results.getString(1));
+            }
+
+            userWords += "    </actors>" + "\n";
+
+            return userWords;
         }
-
-        return userWords;
-
+        else {
+            return "";
+        }
 
     }
 
