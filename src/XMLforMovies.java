@@ -176,7 +176,7 @@ public class XMLforMovies {
         ResultSet results = stmt.executeQuery(query);
 
         if (results.next()) {
-            return "  <movie id=\"" + movieID + "\">\n" + fieldsFor(movieID) + actorsFor(movieID) + directorsFor(movieID) + "  </movie>\n";
+            return "  <movie id=\"" + movieID + "\">\n" + fieldsFor(movieID) + actorsFor(movieID) + directorsFor(movieID) + "  </movie>";
         }
         else {
             return "";
@@ -236,7 +236,7 @@ public class XMLforMovies {
         // convert the entire database into an XML file.
         XMLforMovies xml = new XMLforMovies(dbFilename);
         xml.createFile("movies.xml");
-        System.out.print(xml.elementFor("1234567"));
+        // System.out.print(xml.elementFor("1234567"));
         xml.closeDB();
     }
 }
