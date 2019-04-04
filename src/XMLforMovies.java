@@ -106,7 +106,6 @@ public class XMLforMovies {
      */
     public String actorsFor(String movieID) throws SQLException {
 
-        // replace this return statement with your implementation of the method
         String query = "SELECT P.name\n" +
                 "FROM Person P, Actor A\n" +
                 "WHERE A.movie_id = '" + movieID + "'\n" +
@@ -140,8 +139,28 @@ public class XMLforMovies {
      */
     public String directorsFor(String movieID) throws SQLException {
 
-        // replace this return statement with your implementation of the method
-        return "";
+        String query = "SELECT P.name\n" +
+                "FROM Person P, Director D\n" +
+                "WHERE D.movie_id = '" + movieID + "'\n" +
+                "AND P.id = D.director_id\n" +
+                "ORDER BY P.name;";
+        Statement stmt = this.db.createStatement();
+        ResultSet results = stmt.executeQuery(query);
+
+        String userWords = "    <directors>" + "\n";
+
+        if (results.next()) {
+            userWords += "  " + simpleElem("director", results.getString(1));
+            while (results.next()) {
+                userWords += "  " + simpleElem("director", results.getString(1));
+            }
+            userWords += "    </directors>" + "\n";
+            return userWords;
+        }
+        else {
+            return "";
+        }
+
     }
 
     /*
@@ -209,7 +228,7 @@ public class XMLforMovies {
         // convert the entire database into an XML file.
         XMLforMovies xml = new XMLforMovies(dbFilename);
         xml.createFile("movies.xml");
-        System.out.print(xml.actorsFor(xml.idFor("Black Panther")));
+        System.out.print(xml.directorsFor("1234567"));
         xml.closeDB();
     }
 }
