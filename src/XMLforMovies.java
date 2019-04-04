@@ -70,7 +70,6 @@ public class XMLforMovies {
      */
     public String fieldsFor(String movieID) throws SQLException {
 
-        // replace this return statement with your implementation of the method
         String query = "SELECT * FROM Movie WHERE id = '" + movieID + "';";
         Statement stmt = this.db.createStatement();
         ResultSet results = stmt.executeQuery(query);
@@ -172,9 +171,18 @@ public class XMLforMovies {
      */
     public String elementFor(String movieID) throws SQLException {
 
-        return "  <movie id=\"" + movieID + "\">\n" + fieldsFor(movieID) + actorsFor(movieID) + directorsFor(movieID) + "  </movie>\n";
-    }
+        String query = "SELECT * FROM Movie WHERE id = '" + movieID + "';";
+        Statement stmt = this.db.createStatement();
+        ResultSet results = stmt.executeQuery(query);
 
+        if (results.next()) {
+            return "  <movie id=\"" + movieID + "\">\n" + fieldsFor(movieID) + actorsFor(movieID) + directorsFor(movieID) + "  </movie>\n";
+        }
+        else {
+            return "";
+        }
+
+    }
     /*
      * createFile - creates a text file with the specified filename containing
      * an XML representation of the entire Movie table.
@@ -228,7 +236,7 @@ public class XMLforMovies {
         // convert the entire database into an XML file.
         XMLforMovies xml = new XMLforMovies(dbFilename);
         xml.createFile("movies.xml");
-        System.out.print(xml.elementFor(xml.idFor("Black Panther")));
+        System.out.print(xml.elementFor("1234567"));
         xml.closeDB();
     }
 }
