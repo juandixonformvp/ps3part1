@@ -176,7 +176,7 @@ public class XMLforMovies {
         ResultSet results = stmt.executeQuery(query);
 
         if (results.next()) {
-            return "  <movie id=\"" + movieID + "\">\n" + fieldsFor(movieID) + actorsFor(movieID) + directorsFor(movieID) + "  </movie>";
+            return "  <movie id=\"" + movieID + "\">\n" + fieldsFor(movieID) + actorsFor(movieID) + directorsFor(movieID) + "  </movie>\n";
         }
         else {
             return "";
